@@ -1,0 +1,110 @@
+﻿
+@model IEnumerable<Test.Models.Product>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        thead {
+            background-color: #f4f4f4;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #007BFF;
+            color: white;
+            text-transform: uppercase;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        td {
+            text-align: center;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+            .pagination a {
+                text-decoration: none;
+                margin: 0 10px;
+                padding: 8px 16px;
+                color: #007BFF;
+                border: 1px solid #007BFF;
+                border-radius: 4px;
+                transition: background-color 0.3s;
+            }
+
+                .pagination a:hover {
+                    background-color: #007BFF;
+                    color: white;
+                }
+    </style>
+</head>
+<body>
+    <h1>Product List</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Product ID</th>
+                <th>Product Name</th>
+                <th>Category ID</th>
+                <th>Category Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var product in Model)
+            {
+                <tr>
+                    <td>@product.ProductId</td>
+                    <td>@product.ProductName</td>
+                    <td>@product.CategoryId</td>
+                    <td>@product.Category.CategoryName</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <!-- Pagination Controls -->
+    <div class="pagination">
+        <a href="@Url.Action("Index", "Home", new { pageNumber = 1 })">First</a>
+        <a href="@Url.Action("Index", "Home", new { pageNumber = Model.FirstOrDefault()?.ProductId ?? 1 - 1 })">Previous</a>
+        <a href="@Url.Action("Index", "Home", new { pageNumber = Model.LastOrDefault()?.ProductId ?? 1 + 1 })">Next</a>
+    </div>
+</body>
+</html>
+
